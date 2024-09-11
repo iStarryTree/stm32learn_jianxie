@@ -11,13 +11,24 @@
 
 #include "stm32f10x.h"
 #include "OLED.h"
+#include "CountSensor.h"
+#include "Encoder.h"
+
+int16_t Num = 0;
 
 int main()
 {
     // oled
     OLED_Init();
-    OLED_ShowChar(1, 1, 'A');
+    // CountSensor_Init();
+    Encoder_Init();
+
+    OLED_ShowString(1, 1, "Num:");
 
     while (1) {
+        // OLED_ShowNum(1, 7, CountSensor_GetCount(), 4);
+        Num += Encoder_GetCount();
+
+        OLED_ShowSignedNum(1, 5, Num, 4);
     }
 }
